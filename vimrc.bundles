@@ -14,19 +14,29 @@
     
     " Deps {
         Plugin 'VundleVim/Vundle.vim'
+        Plugin 'MarcWeber/vim-addon-mw-utils'
+        Plugin 'editorconfig/editorconfig-vim'
     " }
     
     " General {
+        Plugin 'git-commit'
         Plugin 'tpope/vim-fugitive'
         Plugin 'ctrlpvim/ctrlp.vim'
         Plugin 'bling/vim-bufferline'
         Plugin 'easymotion/vim-easymotion'
         Plugin 'jistr/vim-nerdtree-tabs'
         Plugin 'flazz/vim-colorschemes'
-    " 
+        Plugin 'scrooloose/nerdtree'
+    " } 
+
+    " Themes {
+        Plugin 'tomasr/molokai'
+        Plugin 'Solarized'
+    " }
 
     " Snippets & AutoComplete {
-        Plugin 'garbas/vim-snipmate'
+        Plugin 'Valloric/YouCompleteMe'
+        " Plugin 'garbas/vim-snipmate'
         Plugin 'honza/vim-snippets'
     " }
 

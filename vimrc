@@ -1,3 +1,17 @@
+" Environment {
+    " Identify platform {
+        silent function! OSX()
+            return has('macunix')
+        endfunction
+        silent function! LINUX()
+            return has('unix') && !has('macunix') && !has('win32unix')
+        endfunction
+        silent function! WINDOWS()
+            return  (has('win32') || has('win64'))
+        endfunction
+    " }
+" }
+
 " Use before config if available {
     if filereadable(expand("~/.vimrc.before"))
         source ~/.vimrc.before
@@ -12,6 +26,33 @@
 
 " General {
     set background=dark
+    syntax on
+    set hls
+    set mouse=a
+    set mousehide
+    set number
+    set cursorcolumn
+    set cursorline
+    set ruler
+    set encoding=utf-8
+    scriptencoding utf-8
+    "
+    set history=1000
+    set showmode
+    set autoindent
+    set smartindent
+    if OSX()
+        set backspace=2
+    endif
+    if has('gui_running')
+       if isdirectory(expand("~/.vim/bundle/Solarized"))
+           colorscheme solarized
+       endif
+    else
+       if isdirectory(expand("~/.vim/bundle/molokai"))
+           colorscheme molokai
+       endif
+    endif
 " }
 
 " Formatting {
@@ -84,9 +125,6 @@
                 let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
             elseif executable('ack')
                 let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            " On Windows use "dir" as fallback command.
-            elseif WINDOWS()
-                let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
             else
                 let s:ctrlp_fallback = 'find %s -type f'
             endif
