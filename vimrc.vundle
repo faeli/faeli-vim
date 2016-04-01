@@ -1,0 +1,79 @@
+" Basics {
+    set nocompatible              " be iMproved, required
+" }
+
+" Vundle Support {
+" set the runtime path to include Vundle and initialize
+    filetype off                  " required
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+" }
+
+
+" Plugins {
+    
+    " Deps {
+        Plugin 'VundleVim/Vundle.vim'
+    " }
+    
+    " General {
+        Plugin 'tpope/vim-fugitive'
+        Plugin 'ctrlpvim/ctrlp.vim'
+        Plugin 'bling/vim-bufferline'
+        Plugin 'easymotion/vim-easymotion'
+        Plugin 'jistr/vim-nerdtree-tabs'
+        Plugin 'flazz/vim-colorschemes'
+    " 
+
+    " Snippets & AutoComplete {
+        Plugin 'garbas/vim-snipmate'
+        Plugin 'honza/vim-snippets'
+    " }
+
+    " Javascript {
+        Plugin 'elzr/vim-json'
+        Plugin 'groenewege/vim-less'
+        Plugin 'pangloss/vim-javascript'
+        Plugin 'briancollins/vim-jst'
+        Plugin 'kchmck/vim-coffee-script'
+    " }
+
+    " HTML {
+        Plugin 'amirh/HTML-AutoCloseTag'
+        Plugin 'hail2u/vim-css3-syntax'
+        Plugin 'gorodinskiy/vim-coloresque'
+        Plugin 'tpope/vim-haml'
+        Plugin 'mattn/emmet-vim'
+    " }
+    
+    " Python {
+        " Pick either python-mode or pyflakes & pydoc
+        Plugin 'klen/python-mode'
+        Plugin 'yssource/python.vim'
+        Plugin 'python_match.vim'
+        Plugin 'pythoncomplete'
+    " }
+
+    "
+" }
+
+" Use local plugins config if available {
+    if filereadable(expand("~/.vimrc.plugins.local"))
+        source ~/.vimrc.plugins.local
+    endif
+" }
+
+" Vundle end  {" All of your Plugins must be added before the following line
+    call vundle#end()            " required
+    filetype plugin indent on    " required
+    " To ignore plugin indent changes, instead use:
+    "filetype plugin on
+" }
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line:
