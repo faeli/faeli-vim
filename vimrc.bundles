@@ -37,7 +37,6 @@
     " }
 
     " Snippets & AutoComplete {
-        Plugin 'Valloric/YouCompleteMe'
         " Plugin 'garbas/vim-snipmate'
         Plugin 'honza/vim-snippets'
     " }
@@ -63,7 +62,7 @@
         Plugin 'klen/python-mode'
         Plugin 'yssource/python.vim'
         Plugin 'python_match.vim'
-        " Plugin 'pythoncomplete'
+        Plugin 'pythoncomplete'
     " }
 
     "
