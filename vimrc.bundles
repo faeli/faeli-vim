@@ -59,10 +59,10 @@
     
     " Python {
         " Pick either python-mode or pyflakes & pydoc
-        Plugin 'klen/python-mode'
+        " Plugin 'klen/python-mode'
         Plugin 'yssource/python.vim'
-        Plugin 'python_match.vim'
-        Plugin 'pythoncomplete'
+        " Plugin 'python_match.vim'
+        " Plugin 'pythoncomplete'
     " }
 
     "
