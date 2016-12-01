@@ -96,7 +96,6 @@
 
 " Vundle end  {" All of your Plugins must be added before the following line
     call vundle#end()            " required
-    execute pathogen#infect('bundle/{}')
     filetype plugin indent on    " required
     " To ignore plugin indent changes, instead use:
     "filetype plugin on
@@ -109,3 +108,7 @@
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line:
+" 
+if isdirectory(expand("~/.vim/bundle/vim-pathogen"))
+    execute pathogen#infect('bundle/{}')
+endif
