@@ -44,7 +44,13 @@
     if OSX()
         set backspace=2
     endif
-    if has('gui_running')
+    if has("gui_vimr")
+       " VimR specific stuff
+       if isdirectory(expand("~/.vim/bundle/Solarized"))
+           " colorscheme solarized
+           colorscheme molokai
+       endif
+    elseif  has('gui_running')
        if isdirectory(expand("~/.vim/bundle/Solarized"))
            colorscheme solarized
        endif
@@ -108,6 +114,21 @@
     " JSON {
         nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         let g:vim_json_syntax_conceal = 0
+    " }
+    
+    " Tabs {
+        set switchbuf=usetab
+        nnoremap <F8> :sbnext<CR>
+        nnoremap <S-F8> :sbprevious<CR>
+        set hidden 
+        set showtabline=1
+        nnoremap <C-N> :bnext<CR>
+        nnoremap <C-P> :bprev<CR>
+        nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+        noremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+        if isdirectory(expand("~/.vim/bundle/tabline.vim"))
+            hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
+        endif
     " }
     
     " ctrlp {
