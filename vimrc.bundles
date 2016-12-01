@@ -14,6 +14,7 @@
     
     " Deps {
         Plugin 'VundleVim/Vundle.vim'
+        Plugin 'tpope/vim-pathogen'
         "Plugin 'MarcWeber/vim-addon-mw-utils'
         Plugin 'editorconfig/editorconfig-vim'
     " }
@@ -22,7 +23,6 @@
         "Plugin 'ctrlpvim/ctrlp.vim'
         "Plugin 'easymotion/vim-easymotion'
         " Plugin 'jistr/vim-nerdtree-tabs'
-        "Plugin 'flazz/vim-colorschemes'
         "Plugin 'scrooloose/nerdtree'
     " } 
 
@@ -37,7 +37,11 @@
             Plugin 'mkitt/tabline.vim'
             Plugin 'ap/vim-buftabline'
         " }
-        
+        "
+        " Indent {
+            Plugin 'nathanaelkane/vim-indent-guides'
+        " }
+        "
         " Status {
             Plugin 'itchyny/lightline.vim'
             "Plugin 'bling/vim-bufferline'
@@ -46,8 +50,9 @@
         " }
         
         " Color themes {
+            Plugin 'flazz/vim-colorschemes'
             Plugin 'tomasr/molokai'
-            Plugin 'Solarized'
+            "Plugin 'Solarized'
         " }
     " }
 
@@ -91,6 +96,7 @@
 
 " Vundle end  {" All of your Plugins must be added before the following line
     call vundle#end()            " required
+    execute pathogen#infect('bundle/{}')
     filetype plugin indent on    " required
     " To ignore plugin indent changes, instead use:
     "filetype plugin on

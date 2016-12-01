@@ -46,18 +46,24 @@
     endif
     if has("gui_vimr")
        " VimR specific stuff
-       if isdirectory(expand("~/.vim/bundle/Solarized"))
-           " colorscheme solarized
+       if isdirectory(expand("~/.vim/bundle/molokai"))
            colorscheme molokai
        endif
     elseif  has('gui_running')
-       if isdirectory(expand("~/.vim/bundle/Solarized"))
-           colorscheme solarized
+       if isdirectory(expand("~/.vim/bundle/molokai"))
+       "if isdirectory(expand("~/.vim/bundle/Solarized"))
+           "colorscheme solarized
+           colorscheme molokai
        endif
     else
        if isdirectory(expand("~/.vim/bundle/molokai"))
            colorscheme molokai
        endif
+    endif
+    
+    if isdirectory(expand("~/.vim/bundle/molokai"))
+        let g:molokai_original = 1
+        let g:rehash256 = 1
     endif
 " }
 
@@ -115,6 +121,16 @@
         nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         let g:vim_json_syntax_conceal = 0
     " }
+    
+    " Indent { 
+        if isdirectory(expand("~/.vim/bundle/vim-indent-guides"))
+            let g:indent_guides_auto_colors = 0
+            let g:indent_guides_start_level = 2
+            let g:indent_guides_guide_size = 1
+            autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+            autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
+        endif
+    "}
     
     " Tabs {
         set switchbuf=usetab
