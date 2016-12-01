@@ -145,4 +145,4 @@ setup_vundle    "$APP_PATH/vimrc"
 
 # 8, show msg
 msg             "\nThanks for installing $app_name."
-msg             "© `date +%Y` http://vim.faeli.com/"
+msg             "© `date +%Y` http://vim.faeli.me"
