@@ -4,7 +4,6 @@
 app_name='faeli-vim'
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.faeli-vim"
 [ -z "$REPO_URI" ] && REPO_URI='https://github.com/faeli/faeli-vim.git'
-[ -z "$VUNDLE_URI" ] && VUNDLE_URI='https://github.com/VundleVim/Vundle.vim.git'
 debug_mode=1
 #################### SETUP tools
 msg() {
@@ -114,9 +113,9 @@ create_symlinks() {
 setup_vundle() {
     local system_shell="$SHELL"
     export SHELL="/bin/sh"
-    vim -u "$1" "+set nomore" "+PluginInstall!" "+PluginClean" "+qall"
+    vim -u "$1" "+set nomore" "+PlugInstall" "+PlugClean!" "+qall"
     export SHELL="$system_shell"
-    success "Now updating/installing plugins using Vundle.vim"
+    success "Now updating/installing plugins using Vim-Plug"
     debug
 }
 
@@ -137,8 +136,9 @@ rsync_repo  "$APP_PATH" "$REPO_URI" "master" "$app_name"
 # 5, create symlinks file
 create_symlinks "$APP_PATH" "$HOME"
 
-# 6, rsync_repo Vundle.vim
-rsync_repo "$HOME/.vim/bundle/Vundle.vim" "$VUNDLE_URI" "master" "Vundle.vim"
+# 6, vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # 7, setup vundle
 setup_vundle    "$APP_PATH/vimrc"

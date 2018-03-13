@@ -1,114 +1,201 @@
-" Basics {
-    set nocompatible              " be iMproved, required
-" }
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-" Vundle Support {
-" set the runtime path to include Vundle and initialize
-    filetype off                  " required
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-" }
+" Make sure you use single quotes
 
-
-" Plugins {
+    " Plugins {
     
-    " Deps {
-        Plugin 'VundleVim/Vundle.vim'
-        Plugin 'tpope/vim-pathogen'
-        "Plugin 'MarcWeber/vim-addon-mw-utils'
-        Plugin 'editorconfig/editorconfig-vim'
-    " }
+        " General {
+            Plug 'w0rp/ale'
+            Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+            Plug 'Xuyuanp/nerdtree-git-plugin'
+            Plug 'jistr/vim-nerdtree-tabs'
+            Plug 'editorconfig/editorconfig-vim'
+        " } 
+
+        " Git {
+            Plug 'airblade/vim-gitgutter'    
+            Plug 'tpope/vim-fugitive'
+        " }
+
+        " Themes {
+            " Tabs {
+                " Plug 'mkitt/tabline.vim'
+            " }
+            "
+            " Indent {
+                Plug 'nathanaelkane/vim-indent-guides'
+            " }
+            "
+            " Status {
+                Plug 'itchyny/lightline.vim'
+            " }
+        
+            " Color themes {
+                Plug 'flazz/vim-colorschemes'
+                Plug 'tomasr/molokai'
+            " }
+        " }
+
+        " Snippets & AutoComplete {
+            
+        " }
+
+        " Javascript {
+            
+        " }
+
+        " HTML {
+             Plug 'mattn/emmet-vim'
+        " }
     
-    " General {
-        "Plugin 'ctrlpvim/ctrlp.vim'
-        "Plugin 'easymotion/vim-easymotion'
-        " Plugin 'jistr/vim-nerdtree-tabs'
-        "Plugin 'scrooloose/nerdtree'
-    " } 
-
-    " Git {
-        Plugin 'airblade/vim-gitgutter'    
-        Plugin 'tpope/vim-fugitive'
-        Plugin 'git-commit'
-    " }
-
-    " Themes {
-        " Tabs {
-            Plugin 'mkitt/tabline.vim'
-            Plugin 'ap/vim-buftabline'
-        " }
-        "
-        " Indent {
-            Plugin 'nathanaelkane/vim-indent-guides'
-        " }
-        "
-        " Status {
-            Plugin 'itchyny/lightline.vim'
-            "Plugin 'bling/vim-bufferline'
-            "Plugin 'vim-airline/vim-airline'
-            "Plugin 'vim-airline/vim-airline-themes'
+        " Python { 
+            
         " }
         
-        " Color themes {
-            Plugin 'flazz/vim-colorschemes'
-            Plugin 'tomasr/molokai'
-            "Plugin 'Solarized'
-        " }
-    " }
-
-    " Snippets & AutoComplete {
-        " Plugin 'garbas/vim-snipmate'
-        " Plugin 'honza/vim-snippets'
-    " }
-
-    " Javascript {
-        "Plugin 'elzr/vim-json'
-        "Plugin 'groenewege/vim-less'
-        "Plugin 'pangloss/vim-javascript'
-        "Plugin 'briancollins/vim-jst'
-        "Plugin 'kchmck/vim-coffee-script'
-    " }
-
-    " HTML {
-        "Plugin 'amirh/HTML-AutoCloseTag'
-        "Plugin 'hail2u/vim-css3-syntax'
-        "Plugin 'gorodinskiy/vim-coloresque'
-        "Plugin 'tpope/vim-haml'
-       " Plugin 'mattn/emmet-vim'
+        
     " }
     
-    " Python {
-        " Pick either python-mode or pyflakes & pydoc
-        " Plugin 'klen/python-mode'
-        "Plugin 'yssource/python.vim'
-        " Plugin 'python_match.vim'
-        " Plugin 'pythoncomplete'
+" Initialize plugin system
+call plug#end()
+
+
+" Plugins Setting {
+    " color scheme {
+        if has("gui_vimr")
+           " VimR specific stuff
+           if isdirectory(expand("~/.vim/plugged/molokai"))
+               colorscheme molokai
+           endif
+        elseif  has('gui_running')
+           if isdirectory(expand("~/.vim/plugged/molokai"))
+           "if isdirectory(expand("~/.vim/plugged/Solarized"))
+               "colorscheme solarized
+               colorscheme molokai
+           endif
+        else
+           if isdirectory(expand("~/.vim/plugged/molokai"))
+               colorscheme molokai
+           endif
+        endif
+        
+        if isdirectory(expand("~/.vim/plugged/molokai"))
+            let g:molokai_original = 1
+            let g:rehash256 = 1
+        endif
     " }
+    
+    " NerdTree {
+        if isdirectory(expand("~/.vim/plugged/nerdtree"))
+            map <C-e> <plug>NERDTreeTabsToggle<CR>
+            map <leader>e :NERDTreeFind<CR>
+            nmap <leader>nt :NERDTreeFind<CR>
 
-    "
-" }
+            let NERDTreeShowBookmarks=1
+            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+            let NERDTreeChDirMode=0
+            let NERDTreeQuitOnOpen=1
+            let NERDTreeMouseMode=2
+            let NERDTreeShowHidden=1
+            let NERDTreeKeepTreeInNewTab=1
+            let g:nerdtree_tabs_open_on_gui_startup=0
+        endif
+    " }
+    
+    " JSON {
+        nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+        let g:vim_json_syntax_conceal = 0
+    " }
+    
+    " Indent { 
+        if isdirectory(expand("~/.vim/plugged/vim-indent-guides"))
+            let g:indent_guides_auto_colors = 0
+            let g:indent_guides_start_level = 2
+            let g:indent_guides_guide_size = 1
+            autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+            autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
+        endif
+    "}
+    
+    " Tabs {
+        set switchbuf=usetab
+        nnoremap <F8> :sbnext<CR>
+        nnoremap <S-F8> :sbprevious<CR>
+        set hidden 
+        set showtabline=1
+        nnoremap <C-N> :bnext<CR>
+        nnoremap <C-P> :bprev<CR>
+        nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+        noremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+        if isdirectory(expand("~/.vim/bundle/tabline.vim"))
+            hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
+        endif
+    " }
+    
+    " ctrlp {
+        if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
+            let g:ctrlp_working_path_mode = 'ra'
+            nnoremap <silent> <D-t> :CtrlP<CR>
+            nnoremap <silent> <D-r> :CtrlPMRU<CR>
+            let g:ctrlp_custom_ignore = {
+                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
-" Use local plugins config if available {
-    if filereadable(expand("~/.vimrc.plugins.local"))
-        source ~/.vimrc.plugins.local
-    endif
-" }
+            if executable('ag')
+                let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+            elseif executable('ack-grep')
+                let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
+            elseif executable('ack')
+                let s:ctrlp_fallback = 'ack %s --nocolor -f'
+            else
+                let s:ctrlp_fallback = 'find %s -type f'
+            endif
+            if exists("g:ctrlp_user_command")
+                unlet g:ctrlp_user_command
+            endif
+            let g:ctrlp_user_command = {
+                \ 'types': {
+                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                \ },
+                \ 'fallback': s:ctrlp_fallback
+            \ }
 
-" Vundle end  {" All of your Plugins must be added before the following line
-    call vundle#end()            " required
-    filetype plugin indent on    " required
-    " To ignore plugin indent changes, instead use:
-    "filetype plugin on
+            if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
+                " CtrlP extensions
+                let g:ctrlp_extensions = ['funky']
+
+                "funky
+                nnoremap <Leader>fu :CtrlPFunky<Cr>
+            endif
+        endif
+    "}
+    
+
+    " TagBar {
+        if isdirectory(expand("~/.vim/bundle/tagbar/"))
+            nnoremap <silent> <leader>tt :TagbarToggle<CR>
+        endif
+    "}
+    
+
+    " Fugitive {
+        if isdirectory(expand("~/.vim/plugged/vim-fugitive/"))
+            nnoremap <silent> <leader>gs :Gstatus<CR>
+            nnoremap <silent> <leader>gd :Gdiff<CR>
+            nnoremap <silent> <leader>gc :Gcommit<CR>
+            nnoremap <silent> <leader>gb :Gblame<CR>
+            nnoremap <silent> <leader>gl :Glog<CR>
+            nnoremap <silent> <leader>gp :Git push<CR>
+            nnoremap <silent> <leader>gr :Gread<CR>
+            nnoremap <silent> <leader>gw :Gwrite<CR>
+            nnoremap <silent> <leader>ge :Gedit<CR>
+            " Mnemonic _i_nteractive
+            nnoremap <silent> <leader>gi :Git add -p %<CR>
+            nnoremap <silent> <leader>gg :SignifyToggle<CR>
+        endif
+    "}
+
 " }
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line:
-" 
-if isdirectory(expand("~/.vim/bundle/vim-pathogen"))
-    execute pathogen#infect('bundle/{}')
-endif
