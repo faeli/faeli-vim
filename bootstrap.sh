@@ -4,6 +4,7 @@
 app_name='faeli-vim'
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.faeli-vim"
 [ -z "$REPO_URI" ] && REPO_URI='https://github.com/faeli/faeli-vim.git'
+[ -z "$PLUG_URI" ] && PLUG_URI='https://github.com/junegunn/vim-plug.git'
 debug_mode=1
 #################### SETUP tools
 msg() {
@@ -82,7 +83,7 @@ rsync_repo() {
     local repo_branch="$3"
     local repo_name="$4"
     
-    msg "Trying to update $repo_name"
+    # msg "Trying to update $repo_name"
 
     if [ ! -e "$repo_path" ]; then
         mkdir -p "$repo_path"
@@ -113,9 +114,9 @@ create_symlinks() {
 setup_vundle() {
     local system_shell="$SHELL"
     export SHELL="/bin/sh"
-    vim -u "$1" "+set nomore" "+PlugInstall" "+PlugClean!" "+qall"
+    vim -u "$1" -N "+set nomore" "+PlugInstall" "+PlugClean!" "+qall"
     export SHELL="$system_shell"
-    success "Now updating/installing plugins using Vim-Plug"
+    success "Now updating/installing plugins using vim-plug"
     debug
 }
 
@@ -137,8 +138,11 @@ rsync_repo  "$APP_PATH" "$REPO_URI" "master" "$app_name"
 create_symlinks "$APP_PATH" "$HOME"
 
 # 6, vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+rsync_repo  "$HOME/.vim-plug" "$PLUG_URI" "master" "vim-plug"
+# link autoload/plug.vim
+if [ ! -e "$HOME/.vim/autoload/plug.vim" ]; then
+    ln -s "$HOME/.vim-plug/plug.vim" "$HOME/.vim/autoload/plug.vim"
+fi
 
 # 7, setup vundle
 setup_vundle    "$APP_PATH/vimrc"

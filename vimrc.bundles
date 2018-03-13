@@ -89,18 +89,23 @@ call plug#end()
     
     " NerdTree {
         if isdirectory(expand("~/.vim/plugged/nerdtree"))
-            map <C-e> <plug>NERDTreeTabsToggle<CR>
-            map <leader>e :NERDTreeFind<CR>
-            nmap <leader>nt :NERDTreeFind<CR>
+            autocmd StdinReadPre * let s:std_in=1
+            autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+            autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+            "map <C-e> <plug>NERDTreeTabsToggle<CR>
+            "map <leader>e :NERDTreeFind<CR>
+            "map <leader>nt :NERDTreeFind<CR>
 
-            let NERDTreeShowBookmarks=1
-            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-            let NERDTreeChDirMode=0
-            let NERDTreeQuitOnOpen=1
-            let NERDTreeMouseMode=2
-            let NERDTreeShowHidden=1
-            let NERDTreeKeepTreeInNewTab=1
-            let g:nerdtree_tabs_open_on_gui_startup=0
+            "let NERDTreeShowBookmarks=1
+            "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+            "let NERDTreeChDirMode=0
+            "let NERDTreeQuitOnOpen=1
+            "let NERDTreeMouseMode=2
+            "let NERDTreeShowHidden=1
+            "let NERDTreeKeepTreeInNewTab=1
+            "let g:nerdtree_tabs_open_on_gui_startup=0
+            let g:NERDTreeDirArrowExpandable = '▸'
+            let g:NERDTreeDirArrowCollapsible = '▾'
         endif
     " }
     
