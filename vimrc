@@ -18,15 +18,9 @@
     endif
 " }
 
-" Use bundles config {
-    if filereadable(expand("~/.vimrc.bundles"))
-        source ~/.vimrc.bundles
-    endif
-" }
-
 " General {
-    set background=dark
     syntax on
+    set background=dark
     set hls
     set mouse=a
     set mousehide
@@ -43,27 +37,6 @@
     set smartindent
     if OSX()
         set backspace=2
-    endif
-    if has("gui_vimr")
-       " VimR specific stuff
-       if isdirectory(expand("~/.vim/bundle/molokai"))
-           colorscheme molokai
-       endif
-    elseif  has('gui_running')
-       if isdirectory(expand("~/.vim/bundle/molokai"))
-       "if isdirectory(expand("~/.vim/bundle/Solarized"))
-           "colorscheme solarized
-           colorscheme molokai
-       endif
-    else
-       if isdirectory(expand("~/.vim/bundle/molokai"))
-           colorscheme molokai
-       endif
-    endif
-    
-    if isdirectory(expand("~/.vim/bundle/molokai"))
-        let g:molokai_original = 1
-        let g:rehash256 = 1
     endif
 " }
 
@@ -98,117 +71,8 @@
     "autocmd FileType haskell,rust setlocal nospell
 " }
 
-
-" Plugins {
-    " NerdTree {
-        if isdirectory(expand("~/.vim/bundle/nerdtree"))
-            map <C-e> <plug>NERDTreeTabsToggle<CR>
-            map <leader>e :NERDTreeFind<CR>
-            nmap <leader>nt :NERDTreeFind<CR>
-
-            let NERDTreeShowBookmarks=1
-            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-            let NERDTreeChDirMode=0
-            let NERDTreeQuitOnOpen=1
-            let NERDTreeMouseMode=2
-            let NERDTreeShowHidden=1
-            let NERDTreeKeepTreeInNewTab=1
-            let g:nerdtree_tabs_open_on_gui_startup=0
-        endif
-    " }
-    
-    " JSON {
-        nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-        let g:vim_json_syntax_conceal = 0
-    " }
-    
-    " Indent { 
-        if isdirectory(expand("~/.vim/bundle/vim-indent-guides"))
-            let g:indent_guides_auto_colors = 0
-            let g:indent_guides_start_level = 2
-            let g:indent_guides_guide_size = 1
-            autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-            autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
-        endif
-    "}
-    
-    " Tabs {
-        set switchbuf=usetab
-        nnoremap <F8> :sbnext<CR>
-        nnoremap <S-F8> :sbprevious<CR>
-        set hidden 
-        set showtabline=1
-        nnoremap <C-N> :bnext<CR>
-        nnoremap <C-P> :bprev<CR>
-        nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-        noremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
-        if isdirectory(expand("~/.vim/bundle/tabline.vim"))
-            hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
-        endif
-    " }
-    
-    " ctrlp {
-        if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
-            let g:ctrlp_working_path_mode = 'ra'
-            nnoremap <silent> <D-t> :CtrlP<CR>
-            nnoremap <silent> <D-r> :CtrlPMRU<CR>
-            let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-
-            if executable('ag')
-                let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-            elseif executable('ack-grep')
-                let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
-            elseif executable('ack')
-                let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            else
-                let s:ctrlp_fallback = 'find %s -type f'
-            endif
-            if exists("g:ctrlp_user_command")
-                unlet g:ctrlp_user_command
-            endif
-            let g:ctrlp_user_command = {
-                \ 'types': {
-                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-                    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                \ },
-                \ 'fallback': s:ctrlp_fallback
-            \ }
-
-            if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
-                " CtrlP extensions
-                let g:ctrlp_extensions = ['funky']
-
-                "funky
-                nnoremap <Leader>fu :CtrlPFunky<Cr>
-            endif
-        endif
-    "}
-    
-
-    " TagBar {
-        if isdirectory(expand("~/.vim/bundle/tagbar/"))
-            nnoremap <silent> <leader>tt :TagbarToggle<CR>
-        endif
-    "}
-    
-
-    " Fugitive {
-        if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
-            nnoremap <silent> <leader>gs :Gstatus<CR>
-            nnoremap <silent> <leader>gd :Gdiff<CR>
-            nnoremap <silent> <leader>gc :Gcommit<CR>
-            nnoremap <silent> <leader>gb :Gblame<CR>
-            nnoremap <silent> <leader>gl :Glog<CR>
-            nnoremap <silent> <leader>gp :Git push<CR>
-            nnoremap <silent> <leader>gr :Gread<CR>
-            nnoremap <silent> <leader>gw :Gwrite<CR>
-            nnoremap <silent> <leader>ge :Gedit<CR>
-            " Mnemonic _i_nteractive
-            nnoremap <silent> <leader>gi :Git add -p %<CR>
-            nnoremap <silent> <leader>gg :SignifyToggle<CR>
-        endif
-    "}
-
+" Use bundles config {
+    if filereadable(expand("~/.vimrc.bundles"))
+        source ~/.vimrc.bundles
+    endif
 " }
